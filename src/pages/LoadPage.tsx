@@ -25,7 +25,7 @@ export const LoadPage: FC<LoadPageProps> = function ({ onLoad }) {
   const { updateParsedData, updatePage } = useGlobalContext();
   const params = qs.parse(document.location.search,{ignoreQueryPrefix: true})
   const uid = params.uid
-  const host = "https://erinilis.cn:7701"
+  const host = "https://erinilis.cn"
   // const host = "http://127.0.0.1:7701"
   if (uid){
     setLoadingTip('正在从服务器下载数据 请稍等...');
