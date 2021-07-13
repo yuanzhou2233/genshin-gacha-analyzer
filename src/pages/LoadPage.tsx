@@ -28,11 +28,9 @@ export const LoadPage: FC<LoadPageProps> = function ({onLoad}) {
     const host = "https://erinilis.cn"
     // const host = "http://127.0.0.1:7701"
     if (uid) {
-
         fetch(`${host}/genshin/gachalog/xlsx/${uid}`)
             .then(response => response.arrayBuffer())
             .then(data => {
-                setLoadingTip('正在从服务器下载数据 请稍等...');
                 // @ts-ignore
                 import('xlsx/dist/xlsx.mini.min.js')
                     .then((module) => {
@@ -145,8 +143,9 @@ export const LoadPage: FC<LoadPageProps> = function ({onLoad}) {
             >
                 {errorMessage && <Alert message={errorMessage} type='error'/>}
                 <p className='ant-upload-drag-icon'>
-                    {loading ? <Spin tip={loadingTip}/> : <InboxOutlined/>}
+                    {loading ? <Spin tip={loadingTip}/> : ""}
                 </p>
+                {uid ? <Spin tip="正在从服务器下载数据 请稍等..."/> : <InboxOutlined/>}
                 <p className='ant-upload-text'>点击选择抽卡记录导出文件或将文件拖拽到此区域</p>
                 <p className='ant-upload-text'>( 注：文件的后缀应为.xlsx )</p>
             </Dragger>
