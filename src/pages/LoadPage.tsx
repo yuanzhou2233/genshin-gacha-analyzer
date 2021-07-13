@@ -28,10 +28,10 @@ export const LoadPage: FC<LoadPageProps> = function ({ onLoad }) {
   const host = "https://erinilis.cn:7701"
   // const host = "http://127.0.0.1:7701"
   if (uid){
+    setLoadingTip('正在从服务器下载数据 请稍等...');
     fetch(`${host}/genshin/gachalog/xlsx/${uid}`)
         .then(response => response.arrayBuffer())
         .then(data => {
-          setLoadingTip('接收到xlsx文件...');
           // @ts-ignore
           import('xlsx/dist/xlsx.mini.min.js')
               .then((module) => {
@@ -45,10 +45,15 @@ export const LoadPage: FC<LoadPageProps> = function ({ onLoad }) {
                 }
               })
               .catch(() => {
-                setErrorMessage('XLSX解析文件加载失败，请重新上传');
+                setErrorMessage('XLSX解析文件加载失败');
+                setLoading(false);
               });
         })
-        .catch(e => console.log('错误:', e))
+        .catch(e => {
+          setErrorMessage('数据获取失败');
+          setLoading(false);
+          console.log('错误:', e)
+        })
   }
 
   const handleUpload = useCallback((file: RcFile) => {
